@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KJ4-6Q-L0K">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zga-BR-7pD">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -18,10 +18,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BwB-bo-BUB">
-                                <rect key="frame" x="10" y="74" width="394" height="583"/>
+                                <rect key="frame" x="10" y="30" width="394" height="627"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="wvm-em-NNu">
-                                        <rect key="frame" x="0.0" y="0.0" width="394" height="583"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="394" height="627"/>
                                         <color key="backgroundColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="day_cell" rowHeight="80" id="hBu-hh-pWS">
@@ -127,10 +127,10 @@
             <objects>
                 <viewController id="zbc-Zv-u4z" customClass="SpecificDayViewController" customModule="WeatherApp_Baji_Adib" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VwM-fn-NUe">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="bFl-eu-47G"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="cUs-Ac-51w"/>
                 </viewController>
@@ -147,7 +147,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ykV-ES-t8b">
-                                <rect key="frame" x="10" y="44" width="394" height="42"/>
+                                <rect key="frame" x="10" y="10" width="394" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="riX-D3-HeR"/>
                                 </constraints>
@@ -156,7 +156,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2KV-Ox-phE">
-                                <rect key="frame" x="10" y="101" width="394" height="24"/>
+                                <rect key="frame" x="10" y="67" width="394" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="l1r-b8-ybJ"/>
                                 </constraints>
@@ -165,7 +165,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="V1J-04-61c" userLabel="Current Info">
-                                <rect key="frame" x="0.0" y="146" width="404" height="125"/>
+                                <rect key="frame" x="0.0" y="112" width="404" height="125"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="-10" translatesAutoresizingMaskIntoConstraints="NO" id="gHL-ng-IQL" userLabel="Icon and Temp">
                                         <rect key="frame" x="0.0" y="0.0" width="294.66666666666669" height="125"/>
@@ -214,7 +214,7 @@
                                 </constraints>
                             </stackView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k9X-Ta-sgo" userLabel="Other Info and Hourly Info">
-                                <rect key="frame" x="10" y="292" width="394" height="395"/>
+                                <rect key="frame" x="10" y="258" width="394" height="429"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="geA-qv-u72" userLabel="Content View">
                                         <rect key="frame" x="0.0" y="0.0" width="394" height="334"/>
@@ -540,7 +540,7 @@
                                 </constraints>
                             </scrollView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ma9-vy-IuG">
-                                <rect key="frame" x="168.33333333333334" y="96" width="77.666666666666657" height="31"/>
+                                <rect key="frame" x="168.33333333333334" y="62" width="77.666666666666657" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Settings"/>
                                 <connections>
@@ -573,7 +573,7 @@
                                 <variation key="heightClass=compact" constant="-6"/>
                             </constraint>
                             <constraint firstItem="V1J-04-61c" firstAttribute="leading" secondItem="Qql-6e-dKd" secondAttribute="leading" id="wCw-fZ-3ak"/>
-                            <constraint firstItem="ykV-ES-t8b" firstAttribute="top" secondItem="Qql-6e-dKd" secondAttribute="top" id="xag-Pb-EUf"/>
+                            <constraint firstItem="ykV-ES-t8b" firstAttribute="top" secondItem="Qql-6e-dKd" secondAttribute="top" constant="10" id="xag-Pb-EUf"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Today" image="sun.max.fill" catalog="system" id="UKM-Cg-rqS"/>
@@ -598,22 +598,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8t1-sS-kJV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1704.8" y="-207.34632683658174"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="WLv-zP-MUA">
-            <objects>
-                <navigationController id="KJ4-6Q-L0K" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="GkO-tw-sW7">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="Zga-BR-7pD" kind="relationship" relationship="rootViewController" id="ACl-j6-mod"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HUf-Vf-8LG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-295" y="98"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="5xy-X7-vGD">
@@ -645,9 +629,6 @@
         <image name="sunrise.fill" catalog="system" width="128" height="97"/>
         <image name="sunset.fill" catalog="system" width="128" height="97"/>
         <image name="wind" catalog="system" width="128" height="103"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

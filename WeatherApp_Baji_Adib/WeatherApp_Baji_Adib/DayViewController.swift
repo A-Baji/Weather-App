@@ -44,6 +44,18 @@ class DayViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.startUpdatingLocation()
+        
+        switch locationManager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
+            self.setLocationButton.isHidden = true
+            
+        case .notDetermined, .restricted, .denied:
+            self.location.text = "Location Required"
+            self.setLocationButton.isHidden = false
+            
+        default:
+            break
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -194,7 +206,12 @@ extension DayViewController: CLLocationManagerDelegate {
                     UIApplication.shared.open(settingsUrl, completionHandler: { (success) in })
                  }
             }
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+
+            alertController.addAction(cancelAction)
             alertController.addAction(settingsAction)
+            
             self.present(alertController, animated: true, completion: nil)
         }
         else if (status == CLAuthorizationStatus.authorizedAlways || status == CLAuthorizationStatus.authorizedWhenInUse) {
