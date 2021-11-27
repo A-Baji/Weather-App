@@ -74,7 +74,6 @@ extension WeekViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("tapped \(indexPath.row)")
         specificDay = weatherInfo?.daily[indexPath.row] ?? DailyWeather()
         self.performSegue(withIdentifier: "weeksToDay", sender: self)
     }

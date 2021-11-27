@@ -226,6 +226,24 @@ struct DailyWeather: Codable {
     let rain: Double?
     let snow: Double?
     let uvi: Double
+    
+    public func getDayOfWeek() -> String {
+        let date = Date(timeIntervalSince1970: TimeInterval(self.dt))
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        dateFormatter.timeZone = NSTimeZone() as TimeZone
+        let localDate = dateFormatter.string(from: date)
+        return localDate
+    }
+    
+    public func getDate() -> String {
+        let date = Date(timeIntervalSince1970: TimeInterval(self.dt))
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM dd"
+        dateFormatter.timeZone = NSTimeZone() as TimeZone
+        let localDate = dateFormatter.string(from: date)
+        return localDate
+    }
 }
 
 struct WeatherInfo: Codable {

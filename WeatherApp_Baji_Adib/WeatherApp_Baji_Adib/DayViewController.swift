@@ -223,7 +223,7 @@ extension DayViewController: CLLocationManagerDelegate {
 extension DayViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
         {
-            return CGSize(width: 50, height: 140)
+            return CGSize(width: 55, height: 140)
     }
 }
 
@@ -250,7 +250,7 @@ extension DayViewController: UICollectionViewDataSource {
         time.text = getTime(unix: hour!.dt, format: "h a")
         setWeatherIcon(iconField: icon, id: hour!.weather[0].icon)
         temp.text = "\(String(format:"%.0f", round(hour!.temp)))°"
-        rainChance.text = "\(hour!.pop.clean)%"
+        rainChance.text = "\(Int(Float(hour!.pop.clean)! * 100))%"
 
         return cell
     }
