@@ -11,7 +11,7 @@ class SpecificDayViewController: UIViewController {
     
     var specificDay = DailyWeather()
     
-    // Top Info
+    // Main Info
     @IBOutlet weak var currDay: UILabel!
     @IBOutlet weak var currDate: UILabel!
     @IBOutlet weak var weatherIcon: UIImageView!
@@ -37,7 +37,7 @@ class SpecificDayViewController: UIViewController {
     // Weather Info
     @IBOutlet weak var uvIndex: UILabel!
     @IBOutlet weak var pressure: UILabel!
-    @IBOutlet weak var visibility: UILabel!
+    @IBOutlet weak var rainChance: UILabel!
     @IBOutlet weak var humidity: UILabel!
     @IBOutlet weak var windSpeed: UILabel!
     @IBOutlet weak var cloudiness: UILabel!
@@ -45,7 +45,7 @@ class SpecificDayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set top
+        // Set main
         currDay.text = specificDay.getDayOfWeek()
         currDate.text = specificDay.getDate()
         setWeatherIcon(iconField: weatherIcon, id: specificDay.weather[0].icon)
@@ -55,13 +55,26 @@ class SpecificDayViewController: UIViewController {
         dayFeelsLike.text = "Feels like \(String(format:"%.0f", specificDay.feels_like.day))°"
         
         // Set temps
-        
+        mornTemp.text = "\(String(format:"%.0f", round(specificDay.temp.morn)))°"
+        eveTemp.text = "\(String(format:"%.0f", round(specificDay.temp.eve)))°"
+        nightTemp.text = "\(String(format:"%.0f", round(specificDay.temp.night)))°"
+        mornFeelsLike.text = "\(String(format:"%.0f", round(specificDay.feels_like.morn)))°"
+        eveFeelsLike.text = "\(String(format:"%.0f", round(specificDay.feels_like.eve)))°"
+        nightFeelsLike.text = "\(String(format:"%.0f", round(specificDay.feels_like.night)))°"
         
         // Set sun/moon
-        
+        sunrise.text = getTime(unix: specificDay.sunrise, format: "h:mm a")
+        sunset.text = getTime(unix: specificDay.sunset, format: "h:mm a")
+        moonrise.text = getTime(unix: specificDay.moonrise, format: "h:mm a")
+        moonset.text = getTime(unix: specificDay.moonset, format: "h:mm a")
         
         // Set weather
-        
+        uvIndex.text = specificDay.uvi.clean
+        pressure.text = "\(specificDay.pressure) hPa"
+        rainChance.text = "\(Int(Float(specificDay.pop.clean)! * 100))%"
+        humidity.text = "\(specificDay.humidity)%"
+        windSpeed.text = "\(specificDay.wind_speed.clean) MPH"
+        cloudiness.text = "\(specificDay.clouds)%"
     }
 
     func setWeatherIcon(iconField: UIImageView, id: String) {
@@ -77,5 +90,13 @@ class SpecificDayViewController: UIViewController {
             }
         }).resume()
     }
-
+    
+    func getTime(unix: Int, format: String) -> String {
+        let time = Date(timeIntervalSince1970: TimeInterval(unix))
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        dateFormatter.timeZone = NSTimeZone() as TimeZone
+        let localTime = dateFormatter.string(from: time)
+        return localTime
+    }
 }
