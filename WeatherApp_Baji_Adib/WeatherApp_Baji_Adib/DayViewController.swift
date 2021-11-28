@@ -15,6 +15,7 @@ class DayViewController: UIViewController {
     var weatherInfo: WeatherInfo?
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
+    var url: URL?
     
     @IBOutlet weak var location: UILabel!
     @IBOutlet weak var hourlyTable: UICollectionView!
@@ -70,6 +71,13 @@ class DayViewController: UIViewController {
         if UIApplication.shared.canOpenURL(settingsUrl) {
             UIApplication.shared.open(settingsUrl, completionHandler: { (success) in })
          }
+    }
+    
+    @IBAction func refreshInfo(_ sender: Any) {
+        DispatchQueue.main.async {
+            self.parseData(url: self.url!)
+            self.dateAndTime.text = self.weatherInfo?.current.getDate()
+        }
     }
     
     func UpdateCurrentInfo() {
@@ -181,11 +189,9 @@ extension DayViewController: CLLocationManagerDelegate {
             let lat = currentLocation!.coordinate.latitude
             let lon = currentLocation!.coordinate.longitude
             
-            let url = URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=\(String(describing: lat))&lon=\(String(describing: lon))&units=imperial&exclude=minutely&appid=f1f09b77546d167440f5c0fe108dc16c")
+            self.url = URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=\(String(describing: lat))&lon=\(String(describing: lon))&units=imperial&exclude=minutely&appid=f1f09b77546d167440f5c0fe108dc16c")!
             
-            if url != nil {
-                parseData(url: url!)
-            }
+            parseData(url: self.url!)
         }
     }
     
