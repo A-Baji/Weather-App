@@ -16,11 +16,13 @@ class DayViewController: UIViewController {
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
     var coordinates = ("", "")
+    var pickerData: [String] = [String]()
     
     @IBOutlet weak var location: UILabel!
     @IBOutlet weak var hourlyTable: UICollectionView!
     @IBOutlet weak var setLocationButton: UIButton!
     @IBOutlet weak var unitToggleButton: UILabel!
+    @IBOutlet weak var statePicker: UIPickerView!
     
     // MARK: - Current Info
     @IBOutlet weak var dateAndTime: UILabel!
@@ -41,6 +43,9 @@ class DayViewController: UIViewController {
         
         hourlyTable.delegate = self
         hourlyTable.dataSource = self
+        
+        statePicker.delegate = self
+        statePicker.dataSource = self
         
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -79,6 +84,25 @@ class DayViewController: UIViewController {
     }
     
     @IBAction func changeLocation(_ sender: Any) {
+        guard let path = Bundle.main.path(forResource: "USstates_avg_latLong", ofType: "json") else { return }
+        
+        let url = URL(fileURLWithPath: path)
+
+        do {
+            let data = try Data(contentsOf: url)
+
+            let json = try? JSONSerialization.jsonObject(with: data, options: [])
+            
+            if let states = json as? [Any] {
+                for i in 0..<states.count {
+                    if let currState = states[i] as? [String: Any]{
+                        pickerData.append(currState["state"] as! String)
+                    }
+                }
+            }
+        } catch {
+            print(error)
+        }
     }
     
     @IBAction func toggleTempUnit(_ sender: Any) {
@@ -263,6 +287,25 @@ extension DayViewController: UICollectionViewDataSource {
         return cell
     }
     
+}
+
+extension DayViewController: UIPickerViewDelegate {
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        print(component)
+        return pickerData[row]
+    }
+}
+
+extension DayViewController: UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerData.count
+    }
 }
 
 var inCelsius = false
