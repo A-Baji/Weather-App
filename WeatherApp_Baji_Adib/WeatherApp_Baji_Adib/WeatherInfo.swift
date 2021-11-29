@@ -63,7 +63,7 @@ struct CurrentWeather: Codable {
     public func getDate() -> String {
         let date = Date(timeIntervalSince1970: TimeInterval(self.dt))
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "E, MMMM dd h:mm"
+        dateFormatter.dateFormat = "E, MMMM dd h:mm a"
         dateFormatter.timeZone = NSTimeZone() as TimeZone
         let localDate = dateFormatter.string(from: date)
         return localDate
