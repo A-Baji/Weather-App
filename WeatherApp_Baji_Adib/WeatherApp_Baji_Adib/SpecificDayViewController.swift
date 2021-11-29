@@ -49,18 +49,18 @@ class SpecificDayViewController: UIViewController {
         currDay.text = specificDay.getDayOfWeek()
         currDate.text = specificDay.getDate()
         setWeatherIcon(iconField: weatherIcon, id: specificDay.weather[0].icon)
-        dayTemp.text = "\(String(format:"%.0f", round(specificDay.temp.day)))°"
+        dayTemp.text = "\(specificDay.temp.day.toCelsius)°"
         dayDesc.text = specificDay.weather[0].description.capitalized
-        dayMinMax.text = "\(String(format:"%.0f", round(specificDay.temp.max)))°/ \(String(format:"%.0f", round(specificDay.temp.min)))°"
-        dayFeelsLike.text = "Feels like \(String(format:"%.0f", specificDay.feels_like.day))°"
+        dayMinMax.text = "\(specificDay.temp.max.toCelsius)°/ \(specificDay.temp.min.toCelsius)°"
+        dayFeelsLike.text = "Feels like \(specificDay.feels_like.day.toCelsius)°"
         
         // Set temps
-        mornTemp.text = "\(String(format:"%.0f", round(specificDay.temp.morn)))°"
-        eveTemp.text = "\(String(format:"%.0f", round(specificDay.temp.eve)))°"
-        nightTemp.text = "\(String(format:"%.0f", round(specificDay.temp.night)))°"
-        mornFeelsLike.text = "\(String(format:"%.0f", round(specificDay.feels_like.morn)))°"
-        eveFeelsLike.text = "\(String(format:"%.0f", round(specificDay.feels_like.eve)))°"
-        nightFeelsLike.text = "\(String(format:"%.0f", round(specificDay.feels_like.night)))°"
+        mornTemp.text = "\(specificDay.temp.morn.toCelsius)°"
+        eveTemp.text = "\(specificDay.temp.eve.toCelsius)°"
+        nightTemp.text = "\(specificDay.temp.night.toCelsius)°"
+        mornFeelsLike.text = "\(specificDay.feels_like.morn.toCelsius)°"
+        eveFeelsLike.text = "\(specificDay.feels_like.eve.toCelsius)°"
+        nightFeelsLike.text = "\(specificDay.feels_like.night.toCelsius)°"
         
         // Set sun/moon
         sunrise.text = getTime(unix: specificDay.sunrise, format: "h:mm a")

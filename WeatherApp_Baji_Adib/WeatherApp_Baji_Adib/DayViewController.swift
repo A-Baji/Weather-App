@@ -15,11 +15,12 @@ class DayViewController: UIViewController {
     var weatherInfo: WeatherInfo?
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
-    var url: URL?
+    var coordinates = ("", "")
     
     @IBOutlet weak var location: UILabel!
     @IBOutlet weak var hourlyTable: UICollectionView!
     @IBOutlet weak var setLocationButton: UIButton!
+    @IBOutlet weak var unitToggleButton: UILabel!
     
     // MARK: - Current Info
     @IBOutlet weak var dateAndTime: UILabel!
@@ -74,10 +75,22 @@ class DayViewController: UIViewController {
     }
     
     @IBAction func refreshInfo(_ sender: Any) {
-        DispatchQueue.main.async {
-            self.parseData(url: self.url!)
-            self.dateAndTime.text = self.weatherInfo?.current.getDate()
+        self.parseData()
+    }
+    
+    @IBAction func changeLocation(_ sender: Any) {
+    }
+    
+    @IBAction func toggleTempUnit(_ sender: Any) {
+        inCelsius = !inCelsius
+        if unitToggleButton.text == "°F" {
+            unitToggleButton.text = "°C"
+        } else {
+            unitToggleButton.text = "°F"
+            
         }
+        self.UpdateCurrentInfo()
+        self.hourlyTable.reloadData()
     }
     
     func UpdateCurrentInfo() {
@@ -86,11 +99,11 @@ class DayViewController: UIViewController {
         let today = weatherInfo?.daily[0]
         
         dateAndTime.text = current!.getDate()
-        currTemp.text = "\(String(format:"%.0f", round(current!.temp)))°"
+        currTemp.text = "\(current!.temp.toCelsius)°"
         setWeatherIcon(iconField: currIcon, id: currWeather.icon)
         currDesc.text = currWeather.description.capitalized
-        currMinMax.text = "\(String(format:"%.0f", round(today!.temp.max)))°/ \(String(format:"%.0f", round(today!.temp.min)))°"
-        currFeelsLike.text = "Feels like \(String(format:"%.0f", current!.feels_like))°"
+        currMinMax.text = "\(today!.temp.max.toCelsius)°/ \(today!.temp.min.toCelsius)°"
+        currFeelsLike.text = "Feels like \(current!.feels_like.toCelsius)°"
         currUvi.text = current!.uvi.clean
         currSunrise.text = getTime(unix: current!.sunrise, format: "h:mm a")
         currSunset.text = getTime(unix: current!.sunset, format: "h:mm a")
@@ -99,8 +112,8 @@ class DayViewController: UIViewController {
         currClouds.text = "\(String(describing: current!.clouds))%"
     }
     
-    func parseData(url: URL) {
-        
+    func parseData() {
+        let url = URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=\(coordinates.0)&lon=\(coordinates.1)&units=imperial&exclude=minutely&appid=f1f09b77546d167440f5c0fe108dc16c")!
         URLSession.shared.dataTask(with: url, completionHandler: {data, response, error in
             guard let data = data, error == nil else {
                 print("JSON decode fail: \(String(describing: error))")
@@ -165,17 +178,6 @@ class DayViewController: UIViewController {
             }
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 // MARK: - Extensions
@@ -189,9 +191,9 @@ extension DayViewController: CLLocationManagerDelegate {
             let lat = currentLocation!.coordinate.latitude
             let lon = currentLocation!.coordinate.longitude
             
-            self.url = URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=\(String(describing: lat))&lon=\(String(describing: lon))&units=imperial&exclude=minutely&appid=f1f09b77546d167440f5c0fe108dc16c")!
+            self.coordinates = (String(describing: lat), String(describing: lon))
             
-            parseData(url: self.url!)
+            parseData()
         }
     }
     
@@ -255,7 +257,7 @@ extension DayViewController: UICollectionViewDataSource {
 
         time.text = getTime(unix: hour!.dt, format: "h a")
         setWeatherIcon(iconField: icon, id: hour!.weather[0].icon)
-        temp.text = "\(String(format:"%.0f", round(hour!.temp)))°"
+        temp.text = "\(hour!.temp.toCelsius)°"
         rainChance.text = "\(Int(Float(hour!.pop.clean)! * 100))%"
 
         return cell
@@ -263,9 +265,15 @@ extension DayViewController: UICollectionViewDataSource {
     
 }
 
-// Remove trailing zeroes
+var inCelsius = false
 extension Double {
+    // Remove trailing zeroes
     var clean: String {
        return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)
+    }
+    
+    // Convert to celsius
+    var toCelsius: String {
+        return inCelsius ? String(format: "%.1f", (self-32) * 5/9) : String(format: "%.0f", self)
     }
 }

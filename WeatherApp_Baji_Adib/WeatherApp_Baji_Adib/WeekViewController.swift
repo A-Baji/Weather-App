@@ -106,7 +106,7 @@ extension WeekViewController: UITableViewDataSource {
         }
         rainChance.text = "\(Int(Float(day!.pop.clean)! * 100))%"
         setWeatherIcon(iconField: icon, id: day!.weather[0].icon)
-        minMax.text = "\(String(format:"%.0f", round(day!.temp.max)))°/ \(String(format:"%.0f", round(day!.temp.min)))°"
+        minMax.text = "\(day!.temp.max.toCelsius)°/ \(day!.temp.min.toCelsius)°"
 
         return cell
     }
