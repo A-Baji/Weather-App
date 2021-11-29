@@ -15,8 +15,11 @@ class DayViewController: UIViewController {
     var weatherInfo: WeatherInfo?
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
-    var coordinates = ("", "")
+    var coordinates = ("0", "0")
+    var ogCoords = ("0", "0")
     var pickerData: [String] = [String]()
+    var stateCoordsList: [Any] = [Any]()
+    var currState = "Current Location"
     
     @IBOutlet weak var location: UILabel!
     @IBOutlet weak var hourlyTable: UICollectionView!
@@ -52,6 +55,7 @@ class DayViewController: UIViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.startUpdatingLocation()
         
+        // Check location permissions
         switch locationManager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
             self.setLocationButton.isHidden = true
@@ -62,6 +66,29 @@ class DayViewController: UIViewController {
             
         default:
             break
+        }
+        
+        // Get state list
+        guard let path = Bundle.main.path(forResource: "USstates_avg_latLong", ofType: "json") else { return }
+        
+        let url = URL(fileURLWithPath: path)
+
+        do {
+            let data = try Data(contentsOf: url)
+
+            let json = try? JSONSerialization.jsonObject(with: data, options: [])
+            
+            stateCoordsList = json as! [Any]
+            if let states = json as? [Any] {
+                pickerData.append("Current Location")
+                for i in 0..<states.count {
+                    if let currState = states[i] as? [String: Any]{
+                        pickerData.append(currState["state"] as! String)
+                    }
+                }
+            }
+        } catch {
+            print(error)
         }
     }
     
@@ -84,24 +111,24 @@ class DayViewController: UIViewController {
     }
     
     @IBAction func changeLocation(_ sender: Any) {
-        guard let path = Bundle.main.path(forResource: "USstates_avg_latLong", ofType: "json") else { return }
-        
-        let url = URL(fileURLWithPath: path)
-
-        do {
-            let data = try Data(contentsOf: url)
-
-            let json = try? JSONSerialization.jsonObject(with: data, options: [])
+        if statePicker.isHidden == true {
+            statePicker.isHidden = false
+        } else {
+            statePicker.isHidden = true
             
-            if let states = json as? [Any] {
-                for i in 0..<states.count {
-                    if let currState = states[i] as? [String: Any]{
-                        pickerData.append(currState["state"] as! String)
+            if self.currState == "Current Location" {
+                coordinates = ogCoords
+                parseData()
+            } else {
+                for i in 0..<stateCoordsList.count {
+                    if let currState = stateCoordsList[i] as? [String: Any]{
+                        if self.currState == currState["state"] as! String {
+                            coordinates = (String(describing: currState["latitude"] as! Double), String(describing: currState["longitude"] as! Double))
+                            parseData()
+                        }
                     }
                 }
             }
-        } catch {
-            print(error)
         }
     }
     
@@ -189,7 +216,7 @@ class DayViewController: UIViewController {
     }
     
     func setCity() {
-        let coreLoc = CLLocation(latitude: currentLocation!.coordinate.latitude, longitude: currentLocation!.coordinate.longitude)
+        let coreLoc = CLLocation(latitude: Double(coordinates.0)!, longitude: Double(coordinates.1)!)
         
         CLGeocoder().reverseGeocodeLocation(coreLoc) {(placemarks, error) in
             if error != nil {
@@ -198,7 +225,11 @@ class DayViewController: UIViewController {
             }
             
             if let place = placemarks?[0] {
-                self.location.text = place.locality
+                if place.locality != nil {
+                    self.location.text = "\(place.locality!), \(place.administrativeArea!)"
+                } else {
+                    self.location.text = place.administrativeArea
+                }
             }
         }
     }
@@ -216,6 +247,7 @@ extension DayViewController: CLLocationManagerDelegate {
             let lon = currentLocation!.coordinate.longitude
             
             self.coordinates = (String(describing: lat), String(describing: lon))
+            self.ogCoords = (String(describing: lat), String(describing: lon))
             
             parseData()
         }
@@ -290,15 +322,16 @@ extension DayViewController: UICollectionViewDataSource {
 }
 
 extension DayViewController: UIPickerViewDelegate {
-    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        print(component)
         return pickerData[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        currState = pickerData[row]
     }
 }
 
 extension DayViewController: UIPickerViewDataSource {
-    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
