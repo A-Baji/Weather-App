@@ -31,40 +31,6 @@ class WeekViewController: UIViewController {
             specificDayView.specificDay = self.specificDay
         }
     }
-    
-    func setWeatherIcon(iconField: UIImageView, id: String) {
-        let iconURL = URL(string: "https://openweathermap.org/img/wn/\(id)@4x.png")!
-        URLSession.shared.dataTask(with: iconURL, completionHandler: {(data, response, error) in
-            if error != nil {
-                print(error!)
-                return
-            }
-            
-            DispatchQueue.main.async {
-                iconField.image = UIImage(data: data!)
-            }
-        }).resume()
-    }
-    
-    func getDay(unix: Int) -> String {
-        let time = Date(timeIntervalSince1970: TimeInterval(unix))
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE"
-        dateFormatter.timeZone = NSTimeZone() as TimeZone
-        let localTime = dateFormatter.string(from: time)
-        return localTime
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension WeekViewController: UITableViewDelegate {
@@ -102,7 +68,7 @@ extension WeekViewController: UITableViewDataSource {
         if indexPath.row == 0 {
             days.text = "Today"
         } else{
-            days.text = getDay(unix: day!.dt)
+            days.text = getTime(unix: day!.dt, format: "EEEE")
         }
         rainChance.text = "\(Int(Float(day!.pop.clean)! * 100))%"
         setWeatherIcon(iconField: icon, id: day!.weather[0].icon)

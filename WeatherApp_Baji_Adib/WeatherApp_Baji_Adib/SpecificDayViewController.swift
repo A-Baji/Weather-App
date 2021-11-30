@@ -76,27 +76,4 @@ class SpecificDayViewController: UIViewController {
         windSpeed.text = "\(specificDay.wind_speed.clean) MPH"
         cloudiness.text = "\(specificDay.clouds)%"
     }
-
-    func setWeatherIcon(iconField: UIImageView, id: String) {
-        let iconURL = URL(string: "https://openweathermap.org/img/wn/\(id)@4x.png")!
-        URLSession.shared.dataTask(with: iconURL, completionHandler: {(data, response, error) in
-            if error != nil {
-                print(error!)
-                return
-            }
-            
-            DispatchQueue.main.async {
-                iconField.image = UIImage(data: data!)
-            }
-        }).resume()
-    }
-    
-    func getTime(unix: Int, format: String) -> String {
-        let time = Date(timeIntervalSince1970: TimeInterval(unix))
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = format
-        dateFormatter.timeZone = NSTimeZone() as TimeZone
-        let localTime = dateFormatter.string(from: time)
-        return localTime
-    }
 }
