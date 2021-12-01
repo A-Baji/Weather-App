@@ -967,7 +967,7 @@
                                                 <rect key="frame" x="0.0" y="280" width="394" height="150"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="cII-IR-CTm" userLabel="Left Side Details">
-                                                        <rect key="frame" x="8" y="9" width="131.33333333333334" height="132"/>
+                                                        <rect key="frame" x="5" y="9" width="131.33333333333334" height="132"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="NvW-0t-mFP" userLabel="UV Index">
                                                                 <rect key="frame" x="0.0" y="0.0" width="131.33333333333334" height="30"/>
@@ -1027,7 +1027,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="kvO-Qs-qfD" userLabel="Left Side Values">
-                                                        <rect key="frame" x="136.33333333333334" y="9" width="51.333333333333343" height="132"/>
+                                                        <rect key="frame" x="139.33333333333334" y="9" width="51.333333333333343" height="132"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATD-w8-Zf8">
                                                                 <rect key="frame" x="0.0" y="0.0" width="51.333333333333336" height="30"/>
@@ -1059,7 +1059,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="bkO-oV-STL" userLabel="Right Side Details">
-                                                        <rect key="frame" x="208.66666666666666" y="9" width="89.666666666666657" height="132"/>
+                                                        <rect key="frame" x="203.66666666666666" y="9" width="89.666666666666657" height="132"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="Mx9-04-3fC" userLabel="Humidty">
                                                                 <rect key="frame" x="0.0" y="0.0" width="89.666666666666671" height="30"/>
@@ -1121,7 +1121,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="784-He-beQ" userLabel="Right Side Values">
-                                                        <rect key="frame" x="334" y="9" width="50" height="132"/>
+                                                        <rect key="frame" x="339" y="9" width="50" height="132"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7bs-au-pSv">
                                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="30"/>
@@ -1165,15 +1165,15 @@
                                                     <constraint firstItem="cII-IR-CTm" firstAttribute="centerY" secondItem="jf7-sc-CIX" secondAttribute="centerY" id="3Fb-n6-Fm1"/>
                                                     <constraint firstItem="bkO-oV-STL" firstAttribute="centerY" secondItem="jf7-sc-CIX" secondAttribute="centerY" id="4bH-XR-otD"/>
                                                     <constraint firstItem="Dlo-HH-XWp" firstAttribute="top" secondItem="jf7-sc-CIX" secondAttribute="top" constant="5" id="5P7-hl-7nO"/>
-                                                    <constraint firstItem="Dlo-HH-XWp" firstAttribute="leading" secondItem="kvO-Qs-qfD" secondAttribute="trailing" constant="8" id="760-0a-H0j"/>
+                                                    <constraint firstItem="Dlo-HH-XWp" firstAttribute="leading" secondItem="kvO-Qs-qfD" secondAttribute="trailing" constant="5" id="760-0a-H0j"/>
                                                     <constraint firstItem="kvO-Qs-qfD" firstAttribute="centerY" secondItem="jf7-sc-CIX" secondAttribute="centerY" id="AvM-HC-o6m"/>
                                                     <constraint firstItem="784-He-beQ" firstAttribute="centerY" secondItem="jf7-sc-CIX" secondAttribute="centerY" id="E07-TB-58s"/>
-                                                    <constraint firstItem="cII-IR-CTm" firstAttribute="leading" secondItem="jf7-sc-CIX" secondAttribute="leading" constant="8" id="cnS-cC-kC7"/>
+                                                    <constraint firstItem="cII-IR-CTm" firstAttribute="leading" secondItem="jf7-sc-CIX" secondAttribute="leading" constant="5" id="cnS-cC-kC7"/>
                                                     <constraint firstAttribute="height" constant="150" id="iNt-JE-2fh"/>
                                                     <constraint firstItem="Dlo-HH-XWp" firstAttribute="centerX" secondItem="jf7-sc-CIX" secondAttribute="centerX" id="lGC-63-DY7"/>
-                                                    <constraint firstAttribute="trailing" secondItem="784-He-beQ" secondAttribute="trailing" constant="10" id="r4I-eQ-cV8"/>
+                                                    <constraint firstAttribute="trailing" secondItem="784-He-beQ" secondAttribute="trailing" constant="5" id="r4I-eQ-cV8"/>
                                                     <constraint firstAttribute="bottom" secondItem="Dlo-HH-XWp" secondAttribute="bottom" constant="5" id="sFK-vL-V7l"/>
-                                                    <constraint firstItem="bkO-oV-STL" firstAttribute="leading" secondItem="Dlo-HH-XWp" secondAttribute="trailing" constant="10" id="yka-Xe-2tV"/>
+                                                    <constraint firstItem="bkO-oV-STL" firstAttribute="leading" secondItem="Dlo-HH-XWp" secondAttribute="trailing" constant="5" id="yka-Xe-2tV"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SdB-g2-w3j" userLabel="Sun/Moon Rise/Set">
