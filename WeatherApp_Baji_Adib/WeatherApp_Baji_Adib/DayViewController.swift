@@ -70,17 +70,13 @@ class DayViewController: UIViewController {
         
         // Get state list
         guard let path = Bundle.main.path(forResource: "USstates_avg_latLong", ofType: "json") else { return }
-        
         let url = URL(fileURLWithPath: path)
-
         do {
             let data = try Data(contentsOf: url)
-
             let json = try? JSONSerialization.jsonObject(with: data, options: [])
             
             stateCoordsList = json as! [Any]
             if let states = json as? [Any] {
-                pickerData.append("Current Location")
                 for i in 0..<states.count {
                     if let currState = states[i] as? [String: Any]{
                         pickerData.append(currState["state"] as! String)
@@ -107,7 +103,9 @@ class DayViewController: UIViewController {
     }
     
     @IBAction func refreshInfo(_ sender: Any) {
-        self.parseData()
+        if coordinates != ("0", "0") {
+            self.parseData()
+        }
     }
     
     @IBAction func changeLocation(_ sender: Any) {
@@ -117,14 +115,17 @@ class DayViewController: UIViewController {
             statePicker.isHidden = true
             
             if self.currState == "Current Location" {
-                coordinates = ogCoords
-                parseData()
+                if coordinates != ("0", "0") {
+                    coordinates = ogCoords
+                    parseData()
+                }
             } else {
                 for i in 0..<stateCoordsList.count {
                     if let currState = stateCoordsList[i] as? [String: Any]{
                         if self.currState == currState["state"] as! String {
                             coordinates = (String(describing: currState["latitude"] as! Double), String(describing: currState["longitude"] as! Double))
                             parseData()
+                            self.setLocationButton.isHidden = true
                         }
                     }
                 }
@@ -133,15 +134,16 @@ class DayViewController: UIViewController {
     }
     
     @IBAction func toggleTempUnit(_ sender: Any) {
-        inCelsius = !inCelsius
-        if unitToggleButton.text == "°F" {
-            unitToggleButton.text = "°C"
-        } else {
-            unitToggleButton.text = "°F"
-            
+        if coordinates != ("0", "0") {
+            inCelsius = !inCelsius
+            if unitToggleButton.text == "°F" {
+                unitToggleButton.text = "°C"
+            } else {
+                unitToggleButton.text = "°F"
+            }
+            self.UpdateCurrentInfo()
+            self.hourlyTable.reloadData()
         }
-        self.UpdateCurrentInfo()
-        self.hourlyTable.reloadData()
     }
     
     func UpdateCurrentInfo() {
@@ -202,10 +204,20 @@ class DayViewController: UIViewController {
             }
             
             if let place = placemarks?[0] {
-                if place.locality != nil {
-                    self.location.text = "\(place.locality!), \(place.administrativeArea!)"
+                if self.currState == "Current Location" {
+                    if place.locality != nil {
+                        self.location.text = place.locality
+                    } else if place.administrativeArea != nil {
+                        self.location.text = place.administrativeArea
+                    } else {
+                        self.location.text = "Unknown"
+                    }
                 } else {
-                    self.location.text = place.administrativeArea
+                    if place.administrativeArea != nil {
+                        self.location.text = self.currState
+                    } else {
+                        self.location.text = "Unknown"
+                    }
                 }
             }
         }
@@ -242,6 +254,9 @@ func getTime(unix: Int, format: String) -> String {
 extension DayViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if !locations.isEmpty, currentLocation == nil  {
+            self.pickerData.insert("Current Location", at: 0)
+            self.statePicker.reloadAllComponents()
+            
             currentLocation = locations.first
             self.locationManager.stopUpdatingLocation()
             
