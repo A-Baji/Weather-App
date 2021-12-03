@@ -26,6 +26,8 @@ class DayViewController: UIViewController {
     @IBOutlet weak var setLocationButton: UIButton!
     @IBOutlet weak var unitToggleButton: UILabel!
     @IBOutlet weak var statePicker: UIPickerView!
+    @IBOutlet weak var confirmStateButton: UIButton!
+    @IBOutlet weak var cancelStateButton: UIButton!
     
     // MARK: - Current Info
     @IBOutlet weak var dateAndTime: UILabel!
@@ -88,9 +90,19 @@ class DayViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        statePicker.isHidden = true
+        confirmStateButton.isHidden = true
+        cancelStateButton.isHidden = true
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         let weekTab = self.tabBarController?.children[1] as! WeekViewController
         weekTab.weatherInfo = self.weatherInfo
+        
+        if coordinates != ("0", "0") {
+            weekTab.setLocation = true
+        }
     }
     
     @IBAction func goToSettings(_ sender: Any) {
@@ -108,29 +120,39 @@ class DayViewController: UIViewController {
         }
     }
     
-    @IBAction func changeLocation(_ sender: Any) {
-        if statePicker.isHidden == true {
-            statePicker.isHidden = false
+    @IBAction func confirmState(_ sender: Any) {
+        statePicker.isHidden = true
+        confirmStateButton.isHidden = true
+        cancelStateButton.isHidden = true
+        
+        if self.currState == "Current Location" {
+            if coordinates != ("0", "0") {
+                coordinates = ogCoords
+                parseData()
+            }
         } else {
-            statePicker.isHidden = true
-            
-            if self.currState == "Current Location" {
-                if coordinates != ("0", "0") {
-                    coordinates = ogCoords
-                    parseData()
-                }
-            } else {
-                for i in 0..<stateCoordsList.count {
-                    if let currState = stateCoordsList[i] as? [String: Any]{
-                        if self.currState == currState["state"] as! String {
-                            coordinates = (String(describing: currState["latitude"] as! Double), String(describing: currState["longitude"] as! Double))
-                            parseData()
-                            self.setLocationButton.isHidden = true
-                        }
+            for i in 0..<stateCoordsList.count {
+                if let currState = stateCoordsList[i] as? [String: Any]{
+                    if self.currState == currState["state"] as! String {
+                        coordinates = (String(describing: currState["latitude"] as! Double), String(describing: currState["longitude"] as! Double))
+                        parseData()
+                        self.setLocationButton.isHidden = true
                     }
                 }
             }
         }
+    }
+    
+    @IBAction func cancelState(_ sender: Any) {
+        statePicker.isHidden = true
+        confirmStateButton.isHidden = true
+        cancelStateButton.isHidden = true
+    }
+    
+    @IBAction func changeLocation(_ sender: Any) {
+        statePicker.isHidden = false
+        confirmStateButton.isHidden = false
+        cancelStateButton.isHidden = false
     }
     
     @IBAction func toggleTempUnit(_ sender: Any) {
@@ -213,11 +235,7 @@ class DayViewController: UIViewController {
                         self.location.text = "Unknown"
                     }
                 } else {
-                    if place.administrativeArea != nil {
-                        self.location.text = self.currState
-                    } else {
-                        self.location.text = "Unknown"
-                    }
+                    self.location.text = self.currState
                 }
             }
         }
