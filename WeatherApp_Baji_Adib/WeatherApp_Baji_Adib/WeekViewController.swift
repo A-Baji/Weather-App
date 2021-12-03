@@ -11,6 +11,7 @@ class WeekViewController: UIViewController {
     
     var weatherInfo: WeatherInfo?
     var specificDay = DailyWeather()
+    var setLocation = false
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -40,8 +41,10 @@ extension WeekViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        specificDay = weatherInfo?.daily[indexPath.row] ?? DailyWeather()
-        self.performSegue(withIdentifier: "weeksToDay", sender: self)
+        if setLocation == true {
+            specificDay = weatherInfo?.daily[indexPath.row] ?? DailyWeather()
+            self.performSegue(withIdentifier: "weeksToDay", sender: self)
+        }
     }
 }
 
